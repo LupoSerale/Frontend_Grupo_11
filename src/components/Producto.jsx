@@ -1,53 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, ModalBody, ModalHeader, ModalFooter } from 'reactstrap';
-import { obtenerProductos, eliminarProducto } from '../services/ServicioProducto';
+import { obtenerProductos, eliminarProducto, crearProductos, editarProductos } from '../services/ServicioProducto';
 import NumberFormat from "react-number-format";
 
-//import {Link} from 'react-router-dom';
-
 function Producto() {
-//Desde aqui codigo API funcional
-  const [productos, setProductos] = useState([])
-  useEffect(() =>{
-    obtenerProductosTodos();
-  },[])
+  //Desde aqui codigo API funcional
 
-  const obtenerProductosTodos = async()=>{
-    let response = await obtenerProductos();
-    console.log(response);
-    setProductos(response.data.data);
-  }
-
-  const seleccionarProducto = (elemento, caso) => {
-    setProductoSeleccionado(elemento);
-    (caso === 'Editar') ? setModalEditar(true) : setModalEliminar(true)
-  }
-
-  const eliminar = async(id) => {
-    await eliminarProducto(id);
-    setModalEliminar(false);
-    obtenerProductosTodos();
-  }
-  //Hasta aqui codigo API funcional
-
-   const dataProducto = [
-    { id: 1, descripcion: "Perro Caliente", valorUnitario: "5000", estado: "Disponible" },
-    { id: 2, descripcion: "Hamburguesa", valorUnitario: "7000", estado: "Disponible" },
-    { id: 3, descripcion: "Pizza", valorUnitario: "10000", estado: "Disponible" },
-  ];
-
-  const [data, setData] = useState(dataProducto);
+  //Ejecutar Modal
   const [modalEditar, setModalEditar] = useState(false);
   const [modalEliminar, setModalEliminar] = useState(false);
   const [modalInsertar, setModalInsertar] = useState(false);
 
-  const [productoSeleccionado, setProductoSeleccionado] = useState({
-    id: '',
-    descripcion: '',
-    valorUnitario: '',
-    estado: ''
-  });
+  //Función para capturar las acciones (Editar o Eliminar)
+  const seleccionarProducto = (producto, caso) => {
+    setProductoSeleccionado(producto);
+    (caso === 'Editar') ? setModalEditar(true) : setModalEliminar(true)
+  }
 
+  //Función para capturar los datos desde los imputs
   const handleChange = e => {
     const { name, value } = e.target;
     setProductoSeleccionado((prevState) => ({
@@ -55,35 +25,50 @@ function Producto() {
       [name]: value
     }));
   }
+  const [productoSeleccionado, setProductoSeleccionado] = useState({
+    id: '',
+    descripcion: '',
+    valor: '',
+    estado: ''
+  });
 
-  const editar = () => {
-    var dataNueva = data;
-    dataNueva.map(producto => {
-      if (producto.id === productoSeleccionado.id) {
-        producto.descripcion = productoSeleccionado.descripcion;
-        producto.valorUnitario = productoSeleccionado.valorUnitario;
-        producto.estado = productoSeleccionado.estado;
-      }
-    });
-    setData(dataNueva);
-    setModalEditar(false);
+  //Función para listar los productos
+  const [productos, setProductos] = useState([])
+  useEffect(() => {
+    obtenerProductosTodos();
+  }, [])
+
+  const obtenerProductosTodos = async () => {
+    let response = await obtenerProductos();
+    console.log(response);
+    setProductos(response.data.data);
+  }
+  
+  //Funcion para eliminar un producto
+  const eliminar = async (id) => {
+    await eliminarProducto(id);
+    setModalEliminar(false);
+    obtenerProductosTodos();
   }
 
- 
-
+  //Función para crear un nuevo producto
   const abrirModalInsertar = () => {
     setProductoSeleccionado(null);
     setModalInsertar(true);
   }
-
-  const insertar = () => {
-    var valorInsertar = productoSeleccionado;
-    valorInsertar.id = data[data.length - 1].id + 1;
-    var dataNueva = data;
-    dataNueva.push(valorInsertar);
-    setData(dataNueva);
+  const crear = async (productoSeleccionado) => {
+    await crearProductos(productoSeleccionado);
     setModalInsertar(false);
+    obtenerProductosTodos();
   }
+
+  //Función para editar el producto seleccionado  
+  const editar = async (productoSeleccionado) => {
+    await editarProductos(productoSeleccionado);
+    setModalEditar(false);
+    obtenerProductosTodos();
+  }
+  //Hasta aqui codigo API funcional
 
   return (
     <>
@@ -149,7 +134,7 @@ function Producto() {
                         <input
                           className="form-control"
                           type="text"
-                          name="valorUnitario"
+                          name="valor"
                           value={productoSeleccionado && productoSeleccionado.valor}
                           onChange={handleChange} />
                         <br />
@@ -159,15 +144,15 @@ function Producto() {
                           name="estado"
                           value={productoSeleccionado && productoSeleccionado.estado}
                           onChange={handleChange} >
-                            <option value="">Seleccione</option>
-                        <option value="true">Disponible</option>
-                        <option value="false">No Disponible</option>
+                          <option value="">Seleccione</option>
+                          <option value="true">Disponible</option>
+                          <option value="false">No Disponible</option>
                         </select>
                         <br />
                       </div>
                     </ModalBody>
                     <ModalFooter>
-                      <button className="btn btn-success" onClick={() => editar()}>
+                      <button className="btn btn-success" onClick={() => editar(productoSeleccionado)}>
                         Actualizar
                       </button>
                       <button
@@ -178,7 +163,7 @@ function Producto() {
                     </ModalFooter>
                   </Modal>
                   <Modal isOpen={modalEliminar}>
-                  <ModalHeader>
+                    <ModalHeader>
                       <div>
                         <h3>Eliminar Producto</h3>
                       </div>
@@ -205,14 +190,6 @@ function Producto() {
                     </ModalHeader>
                     <ModalBody>
                       <div className="form-group">
-                        <label>ID</label>
-                        <input
-                          className="form-control"
-                          readOnly
-                          type="text"
-                          name="id"
-                          value={data[data.length - 1].id + 1} />
-                        <br />
                         <label>Descripcion</label>
                         <textarea
                           className="form-control"
@@ -226,8 +203,8 @@ function Producto() {
                         <input
                           className="form-control"
                           type="text"
-                          name="valorUnitario"
-                          value={productoSeleccionado ? productoSeleccionado.valorUnitario : ''}
+                          name="valor"
+                          value={productoSeleccionado ? productoSeleccionado.valor : ''}
                           onChange={handleChange}
                         />
                         <br />
@@ -237,16 +214,16 @@ function Producto() {
                           name="estado"
                           value={productoSeleccionado ? productoSeleccionado.estado : ''}
                           onChange={handleChange}>
-                        <option value="">Seleccione</option>
-                        <option value="Disponible">Disponible</option>
-                        <option value="No Disponible">No Disponible</option>
+                          <option value="">Seleccione</option>
+                          <option value="true">Disponible</option>
+                          <option value="false">No Disponible</option>
                         </select>
                         <br />
                       </div>
                     </ModalBody>
                     <ModalFooter>
                       <button className="btn btn-success"
-                        onClick={() => insertar()}>
+                        onClick={() => crear(productoSeleccionado)}>
                         Insertar
                       </button>
                       <button className="btn btn-danger"
@@ -262,6 +239,6 @@ function Producto() {
         </div>
       </div>
     </>
-  )  
+  )
 }
 export default Producto;

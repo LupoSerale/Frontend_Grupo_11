@@ -3,6 +3,7 @@ import { Modal, ModalBody, ModalHeader, ModalFooter } from 'reactstrap';
 import { obtenerProductos, eliminarProducto, crearProductos, editarProductos } from '../services/ServicioProducto';
 import NumberFormat from "react-number-format";
 
+
 function Producto() {
   //Desde aqui codigo API funcional
 
@@ -48,6 +49,7 @@ function Producto() {
   const eliminar = async (id) => {
     await eliminarProducto(id);
     setModalEliminar(false);
+    alert('El producto <b>' + productoSeleccionado.descripcion + '</b> fué Eliminado correctamente!', 'danger'); 
     obtenerProductosTodos();
   }
 
@@ -59,17 +61,30 @@ function Producto() {
   const crear = async (productoSeleccionado) => {
     await crearProductos(productoSeleccionado);
     setModalInsertar(false);
+    alert('El producto <b>' + productoSeleccionado.descripcion + '</b> fué Ingresado correctamente!', 'success'); 
     obtenerProductosTodos();
-  }
+    }
 
   //Función para editar el producto seleccionado  
   const editar = async (productoSeleccionado) => {
     await editarProductos(productoSeleccionado);
-    setModalEditar(false);
+    setModalEditar(false);    
     obtenerProductosTodos();
+    alert('El producto <b>' + productoSeleccionado.descripcion + '</b> fué Actualizado correctamente!', 'warning');   
   }
   //Hasta aqui codigo API funcional
-
+  var datoAlerta = document.getElementById('Alerta');
+  
+  
+  function alert(message, type) {
+    var wrapper = document.createElement('div');
+    wrapper.innerHTML = '<div class="alert alert-' + type + ' alert-dismissible" role="alert">' + message + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
+    datoAlerta.append(wrapper);
+    
+  }
+  
+  
+ 
   return (
     <>
       <div className="container">
@@ -81,7 +96,10 @@ function Producto() {
                   <h2>Gestion de Productos</h2>
                   <br />
                   <button className="btn btn-success" onClick={() => abrirModalInsertar()}>Nuevo Producto</button>
-                  <br /><br />
+                  <br />
+                  <br />
+                  <div id="Alerta"></div>
+                  <br/>
                   <table className="table table-bordered table-striped table-hover">
                     <thead className="table-dark">
                       <tr>

@@ -6,7 +6,6 @@ const Inicio = () => {
             <div className="container">
                 <div className="row justify-content-around">
                     <div className="col-10">
-                        <p className="p-3"></p>
                         <div className="container shadow-lg p-3 mb-5 bg-body rounded">
                             <div className="row justify-content-center m-3">
                                 <div className="App">

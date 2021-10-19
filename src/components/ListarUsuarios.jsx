@@ -74,183 +74,184 @@ function ListarUsuarios() {
     <>
       <div className="container">
         <div className="row justify-content-around">
-          <div className="col-10">
-            <p className="p-3"></p>
+          <div className="col-12">
             <div className="container shadow-lg p-3 mb-5 bg-body rounded">
               <div className="row justify-content-center m-3">
                 <div className="App">
-                  <h2>Gestion de Usuarios</h2>
-                  <br />
-                  <button className="btn btn-success" onClick={() => abrirModalInsertar()}>Agregar Usuario</button>
-                  <br /><br />
-                  <table className="table table-bordered" class="table table-striped table-hover">
-                    <thead class="table-light">
-                      <tr>
-                        <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Email</th>
-                        <th>Role</th>
-                        <th>Estado</th>
-                        <th colspan="2">Acciones</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {data.map(elemento => (
+                  <div className="table-responsive">
+                    <h2>Gestion de Usuarios</h2>
+                    <br />
+                    <button className="btn btn-success" onClick={() => abrirModalInsertar()}>Agregar Usuario</button>
+                    <br /><br />
+                    <table className="table table-bordered" class="table table-striped table-hover">
+                      <thead class="table-light">
                         <tr>
-                          <td>{elemento.id}</td>
-                          <td>{elemento.nombre}</td>
-                          <td>{elemento.email}</td>
-                          <td>{elemento.role}</td>
-                          <td>{elemento.estado}</td>
-                          <td><button className="btn btn-success" onClick={() => seleccionarUsuario(elemento, 'Editar')}>Editar</button></td>
-                          <td><button className="btn btn-danger" onClick={() => seleccionarUsuario(elemento, 'Eliminar')}>Eliminar</button></td>
+                          <th>ID</th>
+                          <th>Nombre</th>
+                          <th>Email</th>
+                          <th>Role</th>
+                          <th>Estado</th>
+                          <th colSpan="2">Acciones</th>
                         </tr>
-                      ))
-                      }
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody>
+                        {data.map(elemento => (
+                          <tr>
+                            <td>{elemento.id}</td>
+                            <td>{elemento.nombre}</td>
+                            <td>{elemento.email}</td>
+                            <td>{elemento.role}</td>
+                            <td>{elemento.estado}</td>
+                            <td><button className="btn btn-success" onClick={() => seleccionarUsuario(elemento, 'Editar')}>Editar</button></td>
+                            <td><button className="btn btn-danger" onClick={() => seleccionarUsuario(elemento, 'Eliminar')}>Eliminar</button></td>
+                          </tr>
+                        ))
+                        }
+                      </tbody>
+                    </table>
 
-                  <Modal isOpen={modalEditar}>
-                    <ModalHeader>
-                      <div>
-                        <h3>Editar Usuario</h3>
-                      </div>
-                    </ModalHeader>
-                    <ModalBody>
-                      <div className="form-group">
-                        <label>ID</label>
-                        <input
-                          className="form-control"
-                          readOnly
-                          type="text"
-                          name="id"
-                          value={usuarioSeleccionado && usuarioSeleccionado.id}/>
-                        <br />
-                        <label>Nombre</label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          name="nombre"
-                          value={usuarioSeleccionado && usuarioSeleccionado.nombre}
-                          onChange={handleChange}/>
-                        <br />
-                        <label>Email</label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          name="email"
-                          value={usuarioSeleccionado && usuarioSeleccionado.email}
-                          onChange={handleChange}/>
-                        <br />
-                        <label>Role</label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          name="role"
-                          value={usuarioSeleccionado && usuarioSeleccionado.role}
-                          onChange={handleChange}/>
-                        <br />
-                        <label>Estado</label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          name="estado"
-                          value={usuarioSeleccionado && usuarioSeleccionado.estado}
-                          onChange={handleChange}/>
-                        <br />
-                      </div>
-                    </ModalBody>
-                    <ModalFooter>
-                      <button className="btn btn-success" onClick={() => editar()}>
-                        Actualizar
-                      </button>
-                      <button
-                        className="btn btn-danger"
-                        onClick={() => setModalEditar(false)}>
-                        Cancelar
-                      </button>
-                    </ModalFooter>
-                  </Modal>
-                  <Modal isOpen={modalEliminar}>
-                    <ModalBody>
-                      Estás Seguro que deseas eliminar el usuario {usuarioSeleccionado && usuarioSeleccionado.nombre}
-                    </ModalBody>
-                    <ModalFooter>
-                      <button className="btn btn-danger" onClick={() => eliminar()}>
-                        Sí
-                      </button>
-                      <button
-                        className="btn btn-secondary"
-                        onClick={() => setModalEliminar(false)}>
-                        No
-                      </button>
-                    </ModalFooter>
-                  </Modal>
-                  <Modal isOpen={modalInsertar}>
-                    <ModalHeader>
-                      <div>
-                        <h3>Insertar Usuario</h3>
-                      </div>
-                    </ModalHeader>
-                    <ModalBody>
-                      <div className="form-group">
-                        <label>ID</label>
-                        <input
-                          className="form-control"
-                          readOnly
-                          type="text"
-                          name="id"
-                          value={data[data.length - 1].id + 1}/>
-                        <br />
-                        <label>Nombre</label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          name="nombre"
-                          value={usuarioSeleccionado ? usuarioSeleccionado.nombre : ''}
-                          onChange={handleChange}
-                        />
-                        <br />
-                        <label>Email</label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          name="email"
-                          value={usuarioSeleccionado ? usuarioSeleccionado.email : ''}
-                          onChange={handleChange}
-                        />
-                        <br />
-                        <label>Role</label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          name="role"
-                          value={usuarioSeleccionado ? usuarioSeleccionado.role : ''}
-                          onChange={handleChange}
-                        />
-                        <br />
-                        <label>Estado</label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          name="estado"
-                          value={usuarioSeleccionado ? usuarioSeleccionado.estado : ''}
-                          onChange={handleChange}
-                        />
-                        <br />
-                      </div>
-                    </ModalBody>
-                    <ModalFooter>
-                      <button className="btn btn-success"
-                        onClick={() => insertar()}>
-                        Insertar
-                      </button>
-                      <button className="btn btn-danger"
-                        onClick={() => setModalInsertar(false)}>
-                        Cancelar
-                      </button>
-                    </ModalFooter>
-                  </Modal>
+                    <Modal isOpen={modalEditar}>
+                      <ModalHeader>
+                        <div>
+                          <h3>Editar Usuario</h3>
+                        </div>
+                      </ModalHeader>
+                      <ModalBody>
+                        <div className="form-group">
+                          <label>ID</label>
+                          <input
+                            className="form-control"
+                            readOnly
+                            type="text"
+                            name="id"
+                            value={usuarioSeleccionado && usuarioSeleccionado.id} />
+                          <br />
+                          <label>Nombre</label>
+                          <input
+                            className="form-control"
+                            type="text"
+                            name="nombre"
+                            value={usuarioSeleccionado && usuarioSeleccionado.nombre}
+                            onChange={handleChange} />
+                          <br />
+                          <label>Email</label>
+                          <input
+                            className="form-control"
+                            type="text"
+                            name="email"
+                            value={usuarioSeleccionado && usuarioSeleccionado.email}
+                            onChange={handleChange} />
+                          <br />
+                          <label>Role</label>
+                          <input
+                            className="form-control"
+                            type="text"
+                            name="role"
+                            value={usuarioSeleccionado && usuarioSeleccionado.role}
+                            onChange={handleChange} />
+                          <br />
+                          <label>Estado</label>
+                          <input
+                            className="form-control"
+                            type="text"
+                            name="estado"
+                            value={usuarioSeleccionado && usuarioSeleccionado.estado}
+                            onChange={handleChange} />
+                          <br />
+                        </div>
+                      </ModalBody>
+                      <ModalFooter>
+                        <button className="btn btn-success" onClick={() => editar()}>
+                          Actualizar
+                        </button>
+                        <button
+                          className="btn btn-danger"
+                          onClick={() => setModalEditar(false)}>
+                          Cancelar
+                        </button>
+                      </ModalFooter>
+                    </Modal>
+                    <Modal isOpen={modalEliminar}>
+                      <ModalBody>
+                        Estás Seguro que deseas eliminar el usuario {usuarioSeleccionado && usuarioSeleccionado.nombre}
+                      </ModalBody>
+                      <ModalFooter>
+                        <button className="btn btn-danger" onClick={() => eliminar()}>
+                          Sí
+                        </button>
+                        <button
+                          className="btn btn-secondary"
+                          onClick={() => setModalEliminar(false)}>
+                          No
+                        </button>
+                      </ModalFooter>
+                    </Modal>
+                    <Modal isOpen={modalInsertar}>
+                      <ModalHeader>
+                        <div>
+                          <h3>Insertar Usuario</h3>
+                        </div>
+                      </ModalHeader>
+                      <ModalBody>
+                        <div className="form-group">
+                          <label>ID</label>
+                          <input
+                            className="form-control"
+                            readOnly
+                            type="text"
+                            name="id"
+                            value={data[data.length - 1].id + 1} />
+                          <br />
+                          <label>Nombre</label>
+                          <input
+                            className="form-control"
+                            type="text"
+                            name="nombre"
+                            value={usuarioSeleccionado ? usuarioSeleccionado.nombre : ''}
+                            onChange={handleChange}
+                          />
+                          <br />
+                          <label>Email</label>
+                          <input
+                            className="form-control"
+                            type="text"
+                            name="email"
+                            value={usuarioSeleccionado ? usuarioSeleccionado.email : ''}
+                            onChange={handleChange}
+                          />
+                          <br />
+                          <label>Role</label>
+                          <input
+                            className="form-control"
+                            type="text"
+                            name="role"
+                            value={usuarioSeleccionado ? usuarioSeleccionado.role : ''}
+                            onChange={handleChange}
+                          />
+                          <br />
+                          <label>Estado</label>
+                          <input
+                            className="form-control"
+                            type="text"
+                            name="estado"
+                            value={usuarioSeleccionado ? usuarioSeleccionado.estado : ''}
+                            onChange={handleChange}
+                          />
+                          <br />
+                        </div>
+                      </ModalBody>
+                      <ModalFooter>
+                        <button className="btn btn-success"
+                          onClick={() => insertar()}>
+                          Insertar
+                        </button>
+                        <button className="btn btn-danger"
+                          onClick={() => setModalInsertar(false)}>
+                          Cancelar
+                        </button>
+                      </ModalFooter>
+                    </Modal>
+                  </div>
                 </div>
               </div>
             </div>

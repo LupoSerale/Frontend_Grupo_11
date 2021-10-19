@@ -21,17 +21,15 @@ function App() {
     return (
         <Router>
             <Route component={Header} />
-                <Switch>
-                    <div className="App">
-                        <Route exact path="/" component={Inicio} />
-                        <Route path="/iniciarSesion" component={IniciarSesion} />
-                        <Route path="/registro" component={RegistroDOs} />
-                        <Route path="/producto" component={Producto} />
-                        <Route path="/registrarVenta" component={RegistrarVenta} />
-                        <Route path="/estadoVenta" component={EstadoVenta} />
-                        <Route path="/listarUsuarios" component={ListarUsuarios} />
-                    </div>
-                </Switch>
+            <Switch>
+                <Route exact path="/" component={Inicio} />
+                <Route path="/iniciarSesion" component={IniciarSesion} />
+                <Route path="/registro" component={RegistroDOs} />
+                <Route path="/producto" component={Producto} />
+                <Route path="/registrarVenta" component={RegistrarVenta} />
+                <Route path="/estadoVenta" component={EstadoVenta} />
+                <Route path="/listarUsuarios" component={ListarUsuarios} />
+            </Switch>
         </Router>
     );
 }

@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import React, { useState, useEffect } from 'react';
 import { Modal, ModalBody, ModalHeader, ModalFooter } from 'reactstrap';
 import { obtenerProductos, eliminarProducto, crearProductos, editarProductos } from '../services/ServicioProducto';
@@ -44,7 +45,6 @@ function Producto() {
     filtrar(e.target.value);
   }
   const filtrar = (terminoBusqueda) => {
-    // eslint-disable-next-line array-callback-return
     var resutadosBusqueda = tablaProductos.filter((elemento) => {
       if (elemento.descripcion.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())) {
         return elemento;
@@ -96,7 +96,7 @@ function Producto() {
 
   function alert(message, type) {
     const wrapper = document.createElement('div');
-    wrapper.innerHTML = '<div className="alert alert-' + type + ' alert-dismissible fade show" role="alert">' + message + '<button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
+    wrapper.innerHTML = '<div class="alert alert-' + type + ' alert-dismissible fade show" role="alert">' + message + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
     datoAlerta.append(wrapper);
   }
 

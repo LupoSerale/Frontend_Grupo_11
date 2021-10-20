@@ -98,7 +98,7 @@ function Producto() {
                     <div id="Alerta"></div>
                     <br />
                     <table className="table table-bordered table-striped table-hover">
-                      <thead className="table-dark">
+                    <thead className="table table-secondary">
                         <tr>
                           <th>ID</th>
                           <th>Descripcion</th>
@@ -114,8 +114,8 @@ function Producto() {
                             <td>{producto.descripcion}</td>
                             <td><NumberFormat value={producto.valor} displayType={'text'} thousandSeparator={true} prefix={'$'} /></td>
                             <td>{producto.estado ? "Disponible" : "No disponible"}</td>
-                            <td><button className="btn btn-success" onClick={() => seleccionarProducto(producto, 'Editar')}>Editar</button></td>
-                            <td><button className="btn btn-danger" onClick={() => seleccionarProducto(producto, 'Eliminar')}>Eliminar</button></td>
+                            <td align="center"><button className="btn btn-success" onClick={() => seleccionarProducto(producto, 'Editar')}>Editar</button></td>
+                            <td align="center"><button className="btn btn-danger" onClick={() => seleccionarProducto(producto, 'Eliminar')}>Eliminar</button></td>
                           </tr>
                         ))
                         }

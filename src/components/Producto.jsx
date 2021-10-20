@@ -2,9 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Modal, ModalBody, ModalHeader, ModalFooter } from 'reactstrap';
 import { obtenerProductos, eliminarProducto, crearProductos, editarProductos } from '../services/ServicioProducto';
 import NumberFormat from "react-number-format";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
-
 
 function Producto() {
   //Desde aqui codigo API funcional
@@ -47,6 +44,7 @@ function Producto() {
     filtrar(e.target.value);
   }
   const filtrar = (terminoBusqueda) => {
+    // eslint-disable-next-line array-callback-return
     var resutadosBusqueda = tablaProductos.filter((elemento) => {
       if (elemento.descripcion.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())) {
         return elemento;
@@ -98,7 +96,7 @@ function Producto() {
 
   function alert(message, type) {
     const wrapper = document.createElement('div');
-    wrapper.innerHTML = '<div class="alert alert-' + type + ' alert-dismissible fade show" role="alert">' + message + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
+    wrapper.innerHTML = '<div className="alert alert-' + type + ' alert-dismissible fade show" role="alert">' + message + '<button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
     datoAlerta.append(wrapper);
   }
 
@@ -109,8 +107,7 @@ function Producto() {
           <div className="col-12">
             <div className="container shadow-lg p-3 mb-5 bg-body rounded">
               <div className="row justify-content-center m-3">
-                <div className="App">
-                  
+                <div className="App">                  
                     <h2>Gestion de Productos</h2>
                     <br />
                     <button className="btn btn-success" onClick={() => abrirModalInsertar()}>Nuevo Producto</button>
@@ -118,11 +115,11 @@ function Producto() {
                     <br />
                     <div id="Alerta"></div>
                     <br />
-                    <div class="col-12 justify-content-end d-flex">
+                    <div className="col-12 justify-content-end d-flex">
                       <div className="col-12 col-md-4 d-flex">
-                        <div class="input-group">
-                          <input onChange={handleChangeBusqueda} value={busqueda} type="text" class="form-control" placeholder="Buscar por descripción" aria-label="Buscar por descripción" aria-describedby="button-addon2" />
-                          <button class="btn btn-outline-success" type="button" id="button-addon2">Buscar</button>
+                        <div className="input-group">
+                          <input onChange={handleChangeBusqueda} value={busqueda} type="search" className="form-control" placeholder="Buscar por descripción" aria-label="Buscar por descripción" aria-describedby="button-addon2" />
+                          <button className="btn btn-success" type="button" id="button-addon2">Buscar</button>
                         </div>
                       </div>
                     </div>

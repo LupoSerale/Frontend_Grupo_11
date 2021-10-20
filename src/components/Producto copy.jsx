@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Modal, ModalBody, ModalHeader, ModalFooter } from 'reactstrap';
 import { obtenerProductos, eliminarProducto, crearProductos, editarProductos } from '../services/ServicioProducto';
 import NumberFormat from "react-number-format";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 
 function Producto() {
@@ -28,7 +26,6 @@ function Producto() {
       [name]: value
     }));
   }
-
   const [productoSeleccionado, setProductoSeleccionado] = useState({
     id: '',
     descripcion: '',
@@ -37,24 +34,7 @@ function Producto() {
   });
 
   //Función para listar los productos
-  const [productos, setProductos] = useState([]);
-  const [tablaProductos, setTablaProductos] = useState([]);
-  const [busqueda, setBusqueda] = useState([]);
-
-  //Busqueda
-  const handleChangeBusqueda = e => {
-    setBusqueda(e.target.value);
-    filtrar(e.target.value);
-  }
-  const filtrar = (terminoBusqueda) => {
-    var resutadosBusqueda = tablaProductos.filter((elemento) => {
-      if (elemento.descripcion.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())) {
-        return elemento;
-      }
-    });
-    setProductos(resutadosBusqueda);
-  }
-  //Funcion para listar todos los productos
+  const [productos, setProductos] = useState([])
   useEffect(() => {
     obtenerProductosTodos();
   }, [])
@@ -63,7 +43,6 @@ function Producto() {
     let response = await obtenerProductos();
     console.log(response);
     setProductos(response.data.data);
-    setTablaProductos(response.data.data);
   }
 
   //Funcion para eliminar un producto
@@ -110,7 +89,7 @@ function Producto() {
             <div className="container shadow-lg p-3 mb-5 bg-body rounded">
               <div className="row justify-content-center m-3">
                 <div className="App">
-                  
+                  <div className="table-responsive">
                     <h2>Gestion de Productos</h2>
                     <br />
                     <button className="btn btn-success" onClick={() => abrirModalInsertar()}>Nuevo Producto</button>
@@ -118,17 +97,8 @@ function Producto() {
                     <br />
                     <div id="Alerta"></div>
                     <br />
-                    <div class="col-12 justify-content-end d-flex">
-                      <div className="col-12 col-md-4 d-flex">
-                        <div class="input-group">
-                          <input onChange={handleChangeBusqueda} value={busqueda} type="text" class="form-control" placeholder="Buscar por descripción" aria-label="Buscar por descripción" aria-describedby="button-addon2" />
-                          <button class="btn btn-outline-success" type="button" id="button-addon2">Buscar</button>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="table-responsive">
                     <table className="table table-bordered table-striped table-hover">
-                      <thead className="table table-secondary">
+                    <thead className="table table-secondary">
                         <tr>
                           <th>ID</th>
                           <th>Descripcion</th>
@@ -138,17 +108,16 @@ function Producto() {
                         </tr>
                       </thead>
                       <tbody>
-                        {productos &&
-                          productos.map(producto => (
-                            <tr align="justify" key={producto._id}>
-                              <td>{producto._id}</td>
-                              <td>{producto.descripcion}</td>
-                              <td><NumberFormat value={producto.valor} displayType={'text'} thousandSeparator={true} prefix={'$'} /></td>
-                              <td>{producto.estado ? "Disponible" : "No disponible"}</td>
-                              <td align="center"><button className="btn btn-success" onClick={() => seleccionarProducto(producto, 'Editar')}>Editar</button></td>
-                              <td align="center"><button className="btn btn-danger" onClick={() => seleccionarProducto(producto, 'Eliminar')}>Eliminar</button></td>
-                            </tr>
-                          ))
+                        {productos.map(producto => (
+                          <tr align="justify" key={producto._id}>
+                            <td>{producto._id}</td>
+                            <td>{producto.descripcion}</td>
+                            <td><NumberFormat value={producto.valor} displayType={'text'} thousandSeparator={true} prefix={'$'} /></td>
+                            <td>{producto.estado ? "Disponible" : "No disponible"}</td>
+                            <td align="center"><button className="btn btn-success" onClick={() => seleccionarProducto(producto, 'Editar')}>Editar</button></td>
+                            <td align="center"><button className="btn btn-danger" onClick={() => seleccionarProducto(producto, 'Eliminar')}>Eliminar</button></td>
+                          </tr>
+                        ))
                         }
                       </tbody>
                     </table>

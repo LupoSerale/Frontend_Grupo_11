@@ -1,9 +1,14 @@
-.App {
-  text-align: center;
-  padding-bottom: 3%;
-}
-
 .App-link {
   color: #61dafb;
 }
 
+.App {
+  text-align: center;
+  padding: 40px 30px;
+  max-width: 100% !important;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}

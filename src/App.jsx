@@ -15,6 +15,7 @@ import Inicio from './components/Inicio.jsx';
 import RegistrarVenta from './components/RegistrarVenta.jsx';
 import EstadoVenta from './components/EstadoVenta.jsx';
 import ListarUsuarios from './components/ListarUsuarios.jsx';
+import EditarVenta from './components/EditarVenta.jsx';
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
                 <Route path="/producto" component={Producto} />
                 <Route path="/registrarVenta" component={RegistrarVenta} />
                 <Route path="/estadoVenta" component={EstadoVenta} />
+                <Route path="/api/venta" component={EditarVenta} />
                 <Route path="/listarUsuarios" component={ListarUsuarios} />
             </Switch>
         </Router>

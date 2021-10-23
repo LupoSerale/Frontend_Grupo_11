@@ -7,9 +7,8 @@ import FormInput from "./componentesformulario/inputsform"
 import axios from 'axios';
 
 
-const NuevaVenta = () => {
+const EditarVenta = () => {
     
-
     const [fecha, cambiarFecha] = useState({campo: "", valido: null});
     const [valor, cambiarValor] = useState({campo: "", valido: null});
     const [cantidadProd, cambiarCantidadProd] = useState({campo: "", valido: null});
@@ -51,12 +50,14 @@ const NuevaVenta = () => {
                 
 
               
+                var pathname = window.location.pathname;
+                
 
                 try {
-                    // make axios post request
+                    // make axios put request
                     const response = await axios({
-                      method: "post",
-                      url: "http://localhost:3001/api/venta",
+                      method: "put",
+                      url: "http://localhost:3001"+pathname,
                       data: { 
                           "fecha": e.target.fecha.value,
                           "valor": e.target.valor.value,
@@ -81,7 +82,7 @@ const NuevaVenta = () => {
     return (
         
         <main>
-            <h2>Registrar Venta</h2>
+            <h2>Editar Venta</h2>
             <br></br>
             <Formulario action = "" onSubmit={onSubmit}>
             <FormInput
@@ -180,4 +181,4 @@ const NuevaVenta = () => {
         );
 }
 
-export default NuevaVenta;
+export default EditarVenta;

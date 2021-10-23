@@ -58,7 +58,7 @@ const classes = useStyles();
             <TableCell>Nombre Vendedor</TableCell>
             <TableCell>Documento Vendedor</TableCell>
             <TableCell className={classes.button_add}>
-                <Button variant="contained" color="primary" component={Link} to="/nuevoProducto" >Agregar</Button>
+                <Button variant="contained" color="primary" component={Link} to="/registrarVenta" >Agregar</Button>
             </TableCell>
         </TableRow>
         </TableHead>

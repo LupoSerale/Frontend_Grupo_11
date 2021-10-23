@@ -172,6 +172,10 @@ const EditarVenta = () => {
                     <b>ERROR:</b>Por favor rellene el formulario correctamente
                 </p>
             </MensajeError>}
+
+            <ContenedorBoton>
+                <Boton type="button" ><a href="javascript: history.go(-1)">Volver</a></Boton>
+            </ContenedorBoton>
             <ContenedorBoton>
                 <Boton type="submit">Enviar</Boton>
                 {formularioValido === true && <MensajeExito>Formulario enviado exitosamente</MensajeExito>}

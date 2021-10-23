@@ -1,69 +1,89 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
+import { Table, TableHead, TableCell, TableBody,TableRow, Button, makeStyles } from '@material-ui/core';
+import { getVentas, deleteVenta } from '../services/ServicioVenta';
+import { Link } from 'react-router-dom';
 
-const EstadoVenta = () => {
+//estilos de la tabla que vamos a crear
+const useStyles = makeStyles({
+    table: {
+        width: '90%',
+        margin: '50px 0 0 50px'
+    },
+    thead: {
+        '& > *': {
+            fontSize: 20,
+            background: '#000000',
+            color: '#FFFFFF'
+        } 
+    },
+    row: {
+        '& > *': {
+            fontSize: 18,
+        }
+    }
+
+})
+
+export default function ListarVentas (){
+const classes = useStyles();
+    // definimos los estados
+    const [ventas,setVentas] = useState([])
+    useEffect(()=>{
+        getAllVentas();
+    },[])
+    
+    const getAllVentas = async ()=>{
+        let response = await getVentas()
+        console.log(response);
+        setVentas (response.data.data);
+    }
+    
+    const deleteDataVentas= async (id) => {
+        let callbackUser = window.confirm('Esta seguro de eliminar la venta');
+        if (callbackUser) {
+            await deleteVenta(id);
+            getAllVentas();
+        }
+    }
     return (
-        <>
-            <div className="container">
-                <div className="row justify-content-around">
-                    <div className="col-10">
-                        <p className="p-3"></p>
-                        <div className="container shadow-lg p-3 mb-5 bg-body rounded">
-                            <div className="row justify-content-center m-3"></div>
-
-                            <h1>Módulo de Edición de Estado de Ventas</h1>
-
-                            <div class="container">
-
-                                <input type="text" id="ID_Venta" placeholder="Id Venta a Editar"></input>
-
-                                <input type="tex" id="Fecha_Venta" placeholder="Fecha de Venta"></input><br></br>
-
-                                <input type="tex" id="ID_Cliente" placeholder="Id Cliente"></input>
-
-                                <input type="text" id="Nombre_cliente" placeholder="Nombre cliente"></input>
-
-                                <input type="text" id="Vendedor" placeholder="Nombre Vendedor"></input> <br></br>
-
-                                <input type="number" id="Cantidad" placeholder="Cantidad de Mercancia"></input>
-
-                                <input type="tex" id="ID_Producto" placeholder="ID de Mercancia"></input>
-
-                                <input type="value" id="Valor_Unitario" placeholder="Valor Unitario"></input><br></br>
-
-                                <input type="value" id="Valor_Total" placeholder="Valor Total"></input>
-
-                                <form action="">
-                                    Selecione Nueva Estado:
-                                    <select name="Estado" id="cambio_estado">
-
-                                        <option value="1"> En Proceso </option>
-
-                                        <option value="2"> Cancelada </option>
-
-                                        <option value="3"> Entregada </option>
-
-                                    </select>
-                                </form>
-
-
-                            </div>
-
-                            <div class="button">
-
-                                <input type="submit" id="cambio" value="Registrar Cambio"></input>
-
-                                <input type="reset" id="reset" value="Cancelar"></input> <br></br>
-
-
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </>
-    );
-}
-
-export default EstadoVenta;
+    <Table className={classes.table}>
+        <TableHead>
+        <TableRow className={classes.thead}>
+            <TableCell>ID</TableCell>
+            <TableCell>Fecha</TableCell>
+            <TableCell>Valor</TableCell>
+            <TableCell>Cantidad Productos</TableCell>
+            <TableCell>Documento CLiente</TableCell>
+            <TableCell>Nombre Cliente</TableCell>
+            <TableCell>Nombre Vendedor</TableCell>
+            <TableCell>Documento Vendedor</TableCell>
+            <TableCell className={classes.button_add}>
+                <Button variant="contained" color="primary" component={Link} to="/nuevoProducto" >Agregar</Button>
+            </TableCell>
+        </TableRow>
+        </TableHead>
+        <TableBody>
+        {
+                
+                ventas.map(ventas => (
+                    <TableRow className= {classes.row} key={ventas._id}>
+                        <TableCell>{ventas._id}</TableCell>
+                        <TableCell>{ventas.fecha}</TableCell>
+                        <TableCell>{ventas.valor}</TableCell>
+                        <TableCell>{ventas.cantidadProd}</TableCell>
+                        <TableCell>{ventas.documentoCLiente}</TableCell>
+                        <TableCell>{ventas.nombreCliente}</TableCell>
+                        <TableCell>{ventas.nombreVendedor}</TableCell>
+                        <TableCell>{ventas.documentoVendedor}</TableCell>
+                        <TableCell>
+                            <Button className={classes.button} variant="contained" component={Link} to={`/editarProducto/${ventas._id}`} color="info">Editar</Button>
+                            <Button variant="contained" color="secondary" onClick={() => deleteDataVentas(ventas._id)} >Eliminar</Button>
+                        </TableCell>
+                     </TableRow>   
+                ))
+            }
+        </TableBody>
+    </Table>
+    )
+        
+} 

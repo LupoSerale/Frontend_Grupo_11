@@ -76,7 +76,7 @@ const classes = useStyles();
                         <TableCell>{ventas.nombreVendedor}</TableCell>
                         <TableCell>{ventas.documentoVendedor}</TableCell>
                         <TableCell>
-                            <Button className={classes.button} variant="contained" component={Link} to={`/editarProducto/${ventas._id}`} color="info">Editar</Button>
+                            <Button className={classes.button} variant="contained" component={Link} to={`/api/venta/${ventas._id}`} color="info">Editar</Button>
                             <Button variant="contained" color="secondary" onClick={() => deleteDataVentas(ventas._id)} >Eliminar</Button>
                         </TableCell>
                      </TableRow>   

@@ -56,7 +56,8 @@ const NuevaVenta = () => {
                     // make axios post request
                     const response = await axios({
                       method: "post",
-                      url: "http://localhost:3001/api/venta",
+                      //url: "http://localhost:3001/api/venta",
+                      url: "https://backendgrupo11.herokuapp.com/venta",
                       data: { 
                           "fecha": e.target.fecha.value,
                           "valor": e.target.valor.value,

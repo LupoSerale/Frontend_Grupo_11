@@ -43,18 +43,18 @@ export function Header() {
                                     Ventas
                                 </Link>                                
                                 <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li><Link className="dropdown-item" to="registrarVenta">Registrar Venta</Link></li>
-                                    <li><Link className="dropdown-item" to="estadoVenta">Estado Venta</Link></li>
+                                    <li><Link className="dropdown-item" to="/registrarVenta">Registrar Venta</Link></li>
+                                    <li><Link className="dropdown-item" to="/estadoVenta">Estado Venta</Link></li>
                                 </ul>                                
                             </li>
                             </>)}
                             <li className="nav-item">
-                                <Link className="nav-link" to="Producto">Productos</Link>
+                                <Link className="nav-link" to="/Producto">Productos</Link>
                             </li>
                             {user && (
                                 <>
                             <li className="nav-item">
-                                <Link className="nav-link" to="ListarUsuarios">Usuarios</Link>
+                                <Link className="nav-link" to="/Usuario">Usuarios</Link>
                             </li>
                             </>)}
                         </ul>

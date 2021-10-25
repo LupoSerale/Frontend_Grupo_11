@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faExclamationTriangle} from '@fortawesome/free-solid-svg-icons'
 import FormInput from "./componentesformulario/inputsform"
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 
 const EditarVenta = () => {
@@ -57,7 +58,8 @@ const EditarVenta = () => {
                     // make axios put request
                     const response = await axios({
                       method: "put",
-                      url: "http://localhost:3001"+pathname,
+                      //url: "http://localhost:3001"+pathname,
+                      url: "https://backendgrupo11.herokuapp.com/api/venta"+pathname,
                       data: { 
                           "fecha": e.target.fecha.value,
                           "valor": e.target.valor.value,
@@ -174,7 +176,7 @@ const EditarVenta = () => {
             </MensajeError>}
 
             <ContenedorBoton>
-                <Boton type="button" ><a href="javascript: history.go(-1)">Volver</a></Boton>
+                <Boton type="button"><Link className="nav-link text-light" to="/estadoVenta">Volver</Link></Boton>
             </ContenedorBoton>
             <ContenedorBoton>
                 <Boton type="submit">Enviar</Boton>

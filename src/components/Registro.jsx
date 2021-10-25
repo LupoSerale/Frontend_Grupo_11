@@ -61,15 +61,6 @@ export function Registro() {
                                             onChange={(e) => onValueChange(e)} />
                                     </div>
                                     <br />
-                                    <div className="col-md-12">
-                                        <label className="form-label">Confirmar Contraseña</label>
-                                        <input
-                                            type="password"
-                                            className="form-control"
-                                            name="password2"
-                                            onChange={(e) => onValueChange(e)} />
-                                    </div>
-                                    <br />
                                     <div className="col-12">
                                         <button className="btn btn-success" onClick={() => registrarUsuario()}>Registrese</button>
                                     </div>

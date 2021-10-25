@@ -14,7 +14,8 @@ import Producto from './components/Producto.jsx';
 import Inicio from './components/Inicio.jsx';
 import RegistrarVenta from './components/RegistrarVenta.jsx';
 import EstadoVenta from './components/EstadoVenta.jsx';
-import ListarUsuarios from './components/ListarUsuarios.jsx';
+//import ListarUsuarios from './components/ListarUsuarios.jsx';
+import Usuario from './components/Usuario.jsx';
 import EditarVenta from './components/EditarVenta.jsx';
 import { getCurrentUser } from './services/ServicioAuth';
 
@@ -39,8 +40,8 @@ function App() {
                     <>
                 <Route path="/registrarVenta" component={RegistrarVenta} />
                 <Route path="/estadoVenta" component={EstadoVenta} />
-                <Route path="/api/venta" component={EditarVenta} />
-                <Route path="/listarUsuarios" component={ListarUsuarios} />
+                <Route path="/editarVenta" component={EditarVenta} />
+                <Route path="/Usuario" component={Usuario} />
                 </>)}
             </Switch>
         </Router>

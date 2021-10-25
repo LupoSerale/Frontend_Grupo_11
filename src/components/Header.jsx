@@ -71,7 +71,7 @@ export function Header() {
                             {user && (
                                 <>
                                     <li className="nav-item">
-                                        <Link className="nav-link" onClick={() => CerrarSesion()}>Cerrar Sesion</Link>
+                                        <Link className="nav-link" onClick={() => CerrarSesion()} to=''>Cerrar Sesion</Link>
                                     </li>
                                 </>
                             )}

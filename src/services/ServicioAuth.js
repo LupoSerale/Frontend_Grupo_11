@@ -1,8 +1,8 @@
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 
-const UrlAuth = "http://localhost:3001/api/auth";
-//const UrlUsuarios = "https://backendgrupo11.herokuapp.com/api/auth";
+//const UrlAuth = "http://localhost:3001/api/auth";
+const UrlAuth = "https://backendgrupo11.herokuapp.com/api/auth";
 
 export const iniciarSesionAuth = async (credenciales) => {
     return await axios.post(`${UrlAuth}/login`,credenciales);

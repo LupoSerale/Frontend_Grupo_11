@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const UrlUsuarios = "http://localhost:3001/api/usuario";
-//const UrlUsuarios = "https://backendgrupo11.herokuapp.com/api/usuario";
+//const UrlUsuarios = "http://localhost:3001/api/usuario";
+const UrlUsuarios = "https://backendgrupo11.herokuapp.com/api/usuario";
 
 export const obtenerUsuario = async (id) => {
     return await axios.get(`${UrlUsuarios}/${id}`);

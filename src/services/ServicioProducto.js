@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const UrlProductos = "http://localhost:3001/api/producto";
-//const UrlProductos = "https://backendgrupo11.herokuapp.com/api/producto";
+//const UrlProductos = "http://localhost:3001/api/producto";
+const UrlProductos = "https://backendgrupo11.herokuapp.com/api/producto";
 
 export const obtenerProducto = async (id) => {
     return await axios.get(`${UrlProductos}/${id}`);

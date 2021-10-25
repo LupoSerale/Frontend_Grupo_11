@@ -1,7 +1,6 @@
 Frontend Grupo 11
 
 Integrantes:
-Brian Mateo Mancera Martínez 
 Arturo Fernando Corpas Ulloa
 Ginna Paola Rodriguez Beltrán
 Jhon Wilmer Calderón Madrid

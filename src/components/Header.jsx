@@ -1,8 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import '../App.css';
+import { getCurrentUser } from '../services/ServicioAuth';
 
-const Header = () => {
+export function Header() {
+
+    const [user, setUser] = useState([]);
+
+    useEffect(() => {
+        setUser(getCurrentUser());
+    }, []);
+
+    const CerrarSesion = () => {
+        var URLactual = window.location;
+        localStorage.clear();
+        window.location = URLactual;
+    }
+
     return (
         <>
             <nav className="navbar fixed-top sticky-top navbar-expand-lg navbar-dark bg-success">
@@ -21,28 +35,52 @@ const Header = () => {
                             <li className="nav-item">
                                 <Link className="nav-link" aria-current="page" to="/">Inicio</Link>
                             </li>
+                            {user && (
+                                <>
                             <li className="nav-item dropdown">
                                 <Link className="nav-link dropdown-toggle" to="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
                                     aria-expanded="false">
                                     Ventas
-                                </Link>
+                                </Link>                                
                                 <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <li><Link className="dropdown-item" to="registrarVenta">Registrar Venta</Link></li>
                                     <li><Link className="dropdown-item" to="estadoVenta">Estado Venta</Link></li>
-                                </ul>
+                                </ul>                                
                             </li>
+                            </>)}
                             <li className="nav-item">
                                 <Link className="nav-link" to="Producto">Productos</Link>
                             </li>
+                            {user && (
+                                <>
                             <li className="nav-item">
                                 <Link className="nav-link" to="ListarUsuarios">Usuarios</Link>
                             </li>
+                            </>)}
                         </ul>
-                        <Link className="text-light" to="IniciarSesion">Login</Link>
+                        <ul className="navbar-nav mb-2 mb-lg-0">
+                            {!user && (
+                                <>
+                                    <li className="nav-item">
+                                        <Link className="nav-link" to="Registro">Registrarse</Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <Link className="nav-link" to="IniciarSesion">Iniciar Sesion</Link>
+                                    </li>
+                                </>)}
+                            {user && (
+                                <>
+                                    <li className="nav-item">
+                                        <Link className="nav-link" onClick={() => CerrarSesion()}>Cerrar Sesion</Link>
+                                    </li>
+                                </>
+                            )}
+                        </ul>
                     </div>
                 </div>
             </nav>
-            <br/><br/>
+            <br />
+            <br />
         </>
     );
 }

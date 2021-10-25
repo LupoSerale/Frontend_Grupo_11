@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-//const ventasURL = "http://localhost:3001/api/venta";
-const ventasURL = "https://backendgrupo11.herokuapp.com/api/venta";
+const ventasURL = "http://localhost:3001/api/venta";
+//const ventasURL = "https://backendgrupo11.herokuapp.com/api/venta";
 
 export const getVentas = async () => {
     return await axios.get (`${ventasURL}/`);

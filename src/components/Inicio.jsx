@@ -20,13 +20,7 @@ const Inicio = () => {
                                                 <th scope="col">Contacto</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>1069306510</td>
-                                                <td align="justify">Brian Mateo Mancera Martínez </td>
-                                                <td>manceramateo@gmail.com</td>
-                                                <td>3104888074</td>
-                                            </tr>
+                                        <tbody>                                            
                                             <tr>
                                                 <td>1083456875</td>
                                                 <td align="justify">Arturo Fernando Corpas Ulloa</td>

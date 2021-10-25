@@ -3,8 +3,16 @@ import React, { useState, useEffect } from 'react';
 import { Modal, ModalBody, ModalHeader, ModalFooter } from 'reactstrap';
 import { obtenerProductos, eliminarProducto, crearProductos, editarProductos } from '../services/ServicioProducto';
 import NumberFormat from "react-number-format";
+import { getCurrentUser } from '../services/ServicioAuth';
 
 function Producto() {
+
+  const [user, setUser] = useState([]);
+
+  useEffect(() => {
+    setUser(getCurrentUser());
+  }, []);
+
   //Desde aqui codigo API funcional
 
   //Ejecutar Modal
@@ -107,23 +115,26 @@ function Producto() {
           <div className="col-12">
             <div className="container shadow-lg p-3 mb-5 bg-body rounded">
               <div className="row justify-content-center m-3">
-                <div className="App">                  
-                    <h2>Gestion de Productos</h2>
-                    <br />
-                    <button className="btn btn-success" onClick={() => abrirModalInsertar()}>Nuevo Producto</button>
-                    <br />
-                    <br />
-                    <div id="Alerta"></div>
-                    <br />
-                    <div className="col-12 justify-content-end d-flex">
-                      <div className="col-12 col-md-4 d-flex">
-                        <div className="input-group">
-                          <input onChange={handleChangeBusqueda} value={busqueda} type="search" className="form-control" placeholder="Buscar por descripción" aria-label="Buscar por descripción" aria-describedby="button-addon2" />
-                          <button className="btn btn-success" type="button" id="button-addon2">Buscar</button>
-                        </div>
+                <div className="App">
+                  <h2>Gestion de Productos</h2>
+                  <br />
+                  {user && (
+                    <>
+                      <button className="btn btn-success" onClick={() => abrirModalInsertar()}>Nuevo Producto</button>
+                      <br />
+                      <br />
+                    </>)}
+                  <div id="Alerta"></div>
+                  <br />
+                  <div className="col-12 justify-content-end d-flex">
+                    <div className="col-12 col-md-4 d-flex">
+                      <div className="input-group">
+                        <input onChange={handleChangeBusqueda} value={busqueda} type="search" className="form-control" placeholder="Buscar por descripción" aria-label="Buscar por descripción" aria-describedby="button-addon2" />
+                        <button className="btn btn-success" type="button" id="button-addon2">Buscar</button>
                       </div>
                     </div>
-                    <div className="table-responsive">
+                  </div>
+                  <div className="table-responsive">
                     <table className="table table-bordered table-striped table-hover">
                       <thead className="table table-secondary">
                         <tr>
@@ -131,7 +142,10 @@ function Producto() {
                           <th>Descripcion</th>
                           <th>Valor Unitario</th>
                           <th>Estado</th>
-                          <th colSpan="2">Acciones</th>
+                          {user && (
+                            <>
+                              <th colSpan="2">Acciones</th>
+                            </>)}
                         </tr>
                       </thead>
                       <tbody>
@@ -142,8 +156,11 @@ function Producto() {
                               <td>{producto.descripcion}</td>
                               <td><NumberFormat value={producto.valor} displayType={'text'} thousandSeparator={true} prefix={'$'} /></td>
                               <td>{producto.estado ? "Disponible" : "No disponible"}</td>
-                              <td align="center"><button className="btn btn-success" onClick={() => seleccionarProducto(producto, 'Editar')}>Editar</button></td>
-                              <td align="center"><button className="btn btn-danger" onClick={() => seleccionarProducto(producto, 'Eliminar')}>Eliminar</button></td>
+                              {user && (
+                                <>
+                                  <td align="center"><button className="btn btn-success" onClick={() => seleccionarProducto(producto, 'Editar')}>Editar</button></td>
+                                  <td align="center"><button className="btn btn-danger" onClick={() => seleccionarProducto(producto, 'Eliminar')}>Eliminar</button></td>
+                                </>)}
                             </tr>
                           ))
                         }

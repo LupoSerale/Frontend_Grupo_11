@@ -1,66 +1,86 @@
-import React, { Component } from "react";
-import swal from 'sweetalert';
+import React, { useState } from 'react';
+import { crearUsuarios } from '../services/ServicioUsuario';
+import { useHistory } from 'react-router-dom';
 
+const valorInicial = {
+    fullName: '',
+    email: '',
+    password: ''
+}
+export function Registro() {
 
-class Registro extends Component {
-    render() {
-        const alerta = () => {
-            swal("EXITOSO", "Solicitud creada con exito");
+    const [nuevoUsuario, setNuevoUsuario] = useState(valorInicial);
+
+    let history = useHistory();
+    const onValueChange = (e) => {
+        setNuevoUsuario({ ...nuevoUsuario, [e.target.name]: e.target.value });
+    }
+    const registrarUsuario = async () => {
+        let response = await crearUsuarios(nuevoUsuario);
+        if (response.status === 201) {
+            history.push('/IniciarSesion');
         }
-        return (
-            <>
-                <div className="container">
-                    <div className="row justify-content-around">
-                        <div className="col-8">
-                            <p className="p-3"></p>
-                            <div className="container shadow-lg p-3 mb-5 bg-body rounded">
-                                <div className="row justify-content-center m-3"></div>
-                                <div className="Register">
-                                    <h2>Formulario de Registro</h2>
-                                    <form className="row g-3">
-                                        <div className="col-12">
-                                            <br></br>
-                                            <label htmlFor="nombreCompleto" className="form-label">Nombre Completo</label>
-                                            <input type="text" className="form-control" id="nombreCompleto" placeholder="-Ingrese nombres y apellidos-" />
-                                        </div>
-                                        <div className="col-md-6">
-                                            <label htmlFor="inputEmail4" className="form-label">Email</label>
-                                            <input type="email" className="form-control" id="inputEmail4" />
-                                            <label className="inputEmail4" htmlFor="email">
-                                                Para acceder debes registrar un correo de Gmail
-                                            </label>
-                                        </div>
-                                        <div className="col-md-6">
-                                            <label htmlFor="Telefono" className="form-label">Numero de contacto</label>
-                                            <input type="text" className="form-control" id="Telefono" />
-                                        </div>
-                                        <div className="col-md-6">
-                                            <label htmlFor="Pais" className="form-label">Pais</label>
-                                            <input type="text" className="form-control" id="Pais" />
-                                        </div>
-                                        <div className="col-md-6">
-                                            <label htmlFor="Ciudad" className="form-label">Ciudad</label>
-                                            <input type="text" id="Ciudad" className="form-select" />
-                                        </div>
-                                        <div className="col-12">
-                                            <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" id="gridCheck" />
-                                                <label className="form-check-label" htmlFor="gridCheck">
-                                                    Enviar
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div className="col-12">
-                                            <button onClick={() => alerta()}>Sign in</button>
-                                        </div>
-                                    </form>
+        else
+            console.error('Error creando Usuario' + response.data.error);
+    }
+
+    return (
+        <>
+            <div className="container">
+                <div className="row justify-content-around">
+                    <div className="col-6">
+                        <div className="container shadow-lg p-2 mb-5 bg-body rounded">
+                            <div className="row justify-content-center m-3">
+                                <div className="App">
+                                    <h2>Registrarse</h2>
+                                    <br />
+                                    <div className="col-md-12">
+                                        <label className="form-label">Nombre Completo</label>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            name="fullName"
+                                            onChange={(e) => onValueChange(e)} />
+                                    </div>
+                                    <br />
+                                    <div className="col-md-12">
+                                        <label className="form-label">Email</label>
+                                        <input
+                                            type="email"
+                                            className="form-control"
+                                            name="email"
+                                            onChange={(e) => onValueChange(e)} />
+                                    </div>
+                                    <br />
+                                    <div className="col-md-12">
+                                        <label className="form-label">Contraseña</label>
+                                        <input
+                                            type="password"
+                                            className="form-control"
+                                            name="password"
+                                            onChange={(e) => onValueChange(e)} />
+                                    </div>
+                                    <br />
+                                    <div className="col-md-12">
+                                        <label className="form-label">Confirmar Contraseña</label>
+                                        <input
+                                            type="password"
+                                            className="form-control"
+                                            name="password2"
+                                            onChange={(e) => onValueChange(e)} />
+                                    </div>
+                                    <br />
+                                    <div className="col-12">
+                                        <button className="btn btn-success" onClick={() => registrarUsuario()}>Registrese</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </>
-        )
-    }
+            </div>
+        </>
+    )
 }
+
 export default Registro;
